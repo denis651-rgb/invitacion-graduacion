@@ -245,35 +245,55 @@ export default function GraduationInvitation() {
   // ========================================================
   useEffect(() => {
     const audio = audioRef.current;
+    if (!audio) return;
+
+    audio.volume = 0.7;
 
     const onPlayEvent = () => setIsPlaying(true);
     const onPauseEvent = () => setIsPlaying(false);
 
-    if (audio) {
-      audio.addEventListener("play", onPlayEvent);
-      audio.addEventListener("pause", onPauseEvent);
+    audio.addEventListener("play", onPlayEvent);
+    audio.addEventListener("pause", onPauseEvent);
 
-      // Attempt automatic playback on initial load
-      audio.play().then(() => {
-        setIsPlaying(true);
-      }).catch(() => {
-        // Autoplay policy waiting for user interaction
-      });
-    }
-
-    // Browser Security Policy Fallback:
-    // Unlock playback on first user click/touch anywhere on screen
-    const handleFirstInteraction = () => {
+    const tryAutoPlay = () => {
       if (audio && audio.paused) {
-        audio.play().then(() => {
-          setIsPlaying(true);
-        }).catch(() => {});
+        const playPromise = audio.play();
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => {
+              setIsPlaying(true);
+            })
+            .catch(() => {
+              // Autoplay policy: will trigger on first user interaction
+            });
+        }
       }
     };
 
-    window.addEventListener("click", handleFirstInteraction, { once: true });
-    window.addEventListener("touchstart", handleFirstInteraction, { once: true });
-    window.addEventListener("scroll", handleFirstInteraction, { once: true });
+    // Attempt automatic playback immediately on mount
+    tryAutoPlay();
+
+    // Also trigger as soon as browser has enough data or can play
+    audio.addEventListener("canplay", tryAutoPlay, { once: true });
+    audio.addEventListener("loadeddata", tryAutoPlay, { once: true });
+
+    // Universal gesture fallback to satisfy browser security policies
+    // If the browser blocks 0-click autoplay, starts immediately on first interaction (touch, click, scroll)
+    const interactionEvents = ["pointerdown", "touchstart", "click", "scroll", "keydown"];
+    const handleFirstInteraction = () => {
+      tryAutoPlay();
+      cleanupInteractionListeners();
+    };
+
+    const cleanupInteractionListeners = () => {
+      interactionEvents.forEach((ev) => {
+        window.removeEventListener(ev, handleFirstInteraction);
+      });
+    };
+
+    interactionEvents.forEach((ev) => {
+      window.addEventListener(ev, handleFirstInteraction, { once: true, passive: true });
+    });
 
     // Auto-silence when tab is hidden, minimized, or when user navigates away
     const handleVisibilityChange = () => {
@@ -293,18 +313,16 @@ export default function GraduationInvitation() {
     window.addEventListener("beforeunload", handlePageLeave);
 
     return () => {
-      if (audio) {
-        audio.removeEventListener("play", onPlayEvent);
-        audio.removeEventListener("pause", onPauseEvent);
-      }
-      window.removeEventListener("click", handleFirstInteraction);
-      window.removeEventListener("touchstart", handleFirstInteraction);
-      window.removeEventListener("scroll", handleFirstInteraction);
+      audio.removeEventListener("play", onPlayEvent);
+      audio.removeEventListener("pause", onPauseEvent);
+      audio.removeEventListener("canplay", tryAutoPlay);
+      audio.removeEventListener("loadeddata", tryAutoPlay);
+      cleanupInteractionListeners();
       document.removeEventListener("visibilitychange", handleVisibilityChange);
       window.removeEventListener("pagehide", handlePageLeave);
       window.removeEventListener("beforeunload", handlePageLeave);
     };
-  }, []); // Run ONCE on mount to prevent any infinite re-render loop
+  }, []);
 
   // WhatsApp pre-filled text
   const whatsappUrl =
@@ -372,12 +390,14 @@ export default function GraduationInvitation() {
       {/* Audio Element for custom track in public/musica.mpeg */}
       <audio
         ref={audioRef}
+        autoPlay
+        playsInline
         loop
         preload="auto"
         src="/musica.mpeg"
       >
         <source src="/musica.mpeg" type="audio/mpeg" />
-        <source src="/musica.mp3" type="audio/mp3" />
+        <source src="/musica.mpeg" type="video/mpeg" />
       </audio>
 
       {/* Floating Gold Particles in Background */}
