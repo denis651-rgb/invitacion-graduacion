@@ -1,26 +1,176 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-script: "Great Vibes", cursive;
+  --font-sans: "Montserrat", sans-serif;
+  --color-turquoise-deep: #022327;
+  --color-turquoise-night: #011619;
+  --color-turquoise-card: #04373d;
+  --color-turquoise-accent: #14b8a6;
+  --color-turquoise-light: #5eead4;
+  --color-gold-light: #fbeea4;
+  --color-gold: #e5b94f;
+  --color-gold-dark: #b8860b;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  --background: #022327;
+  --foreground: #f0fdfa;
+}
+
+/* 1. Fuente base para toda la página (textos largos, cuenta regresiva, dirección) */
+body {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  background-color: var(--background);
+  color: var(--foreground);
+  overflow-x: hidden;
+}
+
+/* 2. Fuente elegante para tu nombre o títulos principales ("¡Me gradué!") */
+.titulo-script {
+  font-family: 'Great Vibes', cursive;
+  font-size: 3.5rem;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+/* 3. Subtítulos */
+.subtitulo {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* 1. Efecto de "Oro Metálico" en los textos (Gradient Text) con alto contraste */
+.texto-dorado {
+  background: linear-gradient(
+    135deg,
+    #bf953f 0%,
+    #fff7c2 20%,
+    #b38728 40%,
+    #fcf6ba 60%,
+    #8f6210 80%,
+    #fff2a8 100%
+  ) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+  display: inline-block;
+}
+
+.sombra-oro {
+  filter: drop-shadow(0 3px 12px rgba(212, 175, 55, 0.4));
+}
+
+/* 2. Glassmorphism (Efecto de Vidrio Esmerilado) en las tarjetas */
+.tarjeta-agradecimiento {
+  background: rgba(255, 255, 255, 0.03); /* Blanco casi transparente */
+  backdrop-filter: blur(10px); /* Desenfoque de fondo */
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 215, 0, 0.18); /* Borde dorado sutil */
+  border-radius: 14px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+/* 4. Micro-interacciones (Efecto Hover) */
+.tarjeta-agradecimiento:hover {
+  transform: translateY(-5px); /* Se levanta sutilmente */
+  box-shadow: 0 12px 25px rgba(212, 175, 55, 0.15); /* Brillo dorado de sombra */
+  border-color: rgba(255, 215, 0, 0.4);
+}
+
+/* 3. Espaciado de letras (Tracking) en subtítulos */
+.subtitulo-elegante {
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 3px; /* Elegancia y respiro visual */
+  font-size: 0.85rem;
+}
+
+/* Tarjetas con Glassmorphism Premium */
+.tarjeta-glass {
+  background: rgba(2, 46, 52, 0.65);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.35);
+}
+
+.gold-border {
+  border: 1px solid rgba(212, 175, 55, 0.35);
+}
+
+.gold-border-glow {
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  box-shadow: 0 0 25px rgba(212, 175, 55, 0.15), inset 0 0 15px rgba(212, 175, 55, 0.05);
+}
+
+.turquoise-glow {
+  box-shadow: 0 10px 40px -10px rgba(20, 184, 166, 0.3);
+}
+
+/* Rotación suave para el disco de música */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.animate-spin-slow {
+  animation: spin-slow 8s linear infinite;
+}
+
+/* Partículas Doradas Flotantes (Solución CSS Puro de Alto Rendimiento) */
+@keyframes float-up {
+  0% {
+    transform: translateY(105vh) translateX(0px) scale(0.6);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.9;
+  }
+  50% {
+    transform: translateY(50vh) translateX(25px) scale(1);
+    opacity: 1;
+  }
+  85% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateY(-5vh) translateX(-25px) scale(0.5);
+    opacity: 0;
+  }
+}
+
+.particula-dorada {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle, #ffffff 0%, #fff7c2 30%, #d4af37 70%, transparent 100%);
+  box-shadow: 0 0 8px rgba(254, 240, 138, 0.8), 0 0 16px rgba(212, 175, 55, 0.4);
+  animation-name: float-up;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform, opacity;
+}
+
+/* Custom subtle scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #011619;
+}
+::-webkit-scrollbar-thumb {
+  background: #0f766e;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #14b8a6;
 }
