@@ -86,6 +86,71 @@ function VintageVinyl({ isPlaying }: { isPlaying: boolean }) {
   );
 }
 
+// Retro Vintage Flip Clock Card with Gold Foil & Split-Flap Mechanism
+function VintageFlipCard({ value, label }: { value: number; label: string }) {
+  const formatted = String(value).padStart(2, "0");
+
+  return (
+    <div className="flex flex-col items-center flex-1 min-w-0">
+      {/* Plaqueta Flip Clock Vintage con borde biselado dorado */}
+      <motion.div
+        whileHover={{ scale: 1.04, y: -2 }}
+        transition={{ duration: 0.2 }}
+        className="relative w-full aspect-[4/5] max-w-[80px] xs:max-w-[90px] sm:max-w-[110px] rounded-xl sm:rounded-2xl bg-gradient-to-b from-[#032f35] via-[#012226] to-[#011417] p-1 border-2 border-amber-400/60 shadow-[0_8px_25px_rgba(217,170,50,0.22),inset_0_1px_2px_rgba(255,245,180,0.5)] select-none"
+      >
+        {/* Reflejo biselado gold foil superior */}
+        <div className="absolute inset-x-2 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-amber-200 to-transparent opacity-90 z-30" />
+
+        {/* Remaches / Pivotes mecánicos laterales del eje de volteo */}
+        <div className="absolute -left-1 top-1/2 -translate-y-1/2 w-1.5 h-3.5 rounded-r-sm bg-gradient-to-r from-amber-200 via-amber-400 to-amber-600 shadow-md z-30 border-y border-r border-amber-200/50" />
+        <div className="absolute -right-1 top-1/2 -translate-y-1/2 w-1.5 h-3.5 rounded-l-sm bg-gradient-to-l from-amber-200 via-amber-400 to-amber-600 shadow-md z-30 border-y border-l border-amber-200/50" />
+
+        {/* Interior con textura y split-flap */}
+        <div className="relative h-full w-full rounded-lg sm:rounded-xl overflow-hidden bg-[#011618] flex items-center justify-center [perspective:600px]">
+          {/* Brillo satinado mitad superior */}
+          <div className="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/[0.12] via-white/[0.04] to-transparent pointer-events-none z-10" />
+
+          {/* Sombra de profundidad mitad inferior */}
+          <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/60 via-black/20 to-transparent pointer-events-none z-10" />
+
+          {/* Ranura divisoria sutil en el fondo (discreta, no tapa los números) */}
+          <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[1px] bg-gradient-to-r from-amber-400/30 via-black/40 to-amber-400/30 pointer-events-none z-0" />
+
+          {/* Número animado en primer plano (z-10) con total legibilidad */}
+          <div className="relative z-10 flex items-center justify-center h-full w-full">
+            <AnimatePresence mode="popLayout" initial={false}>
+              <motion.span
+                key={formatted}
+                initial={{ rotateX: -90, opacity: 0.15, filter: "blur(1.5px)" }}
+                animate={{ rotateX: 0, opacity: 1, filter: "blur(0px)" }}
+                exit={{ rotateX: 90, opacity: 0, filter: "blur(1.5px)" }}
+                transition={{ duration: 0.45, ease: [0.25, 1, 0.5, 1] }}
+                suppressHydrationWarning
+                className="texto-dorado font-mono text-2xl xs:text-3xl sm:text-5xl md:text-6xl font-black tracking-tight leading-none drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]"
+                style={{
+                  transformOrigin: "center center",
+                  transformStyle: "preserve-3d",
+                  backfaceVisibility: "hidden",
+                }}
+              >
+                {formatted}
+              </motion.span>
+            </AnimatePresence>
+          </div>
+        </div>
+
+        {/* Reflejo biselado inferior */}
+        <div className="absolute inset-x-3 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-amber-400/40 to-transparent" />
+      </motion.div>
+
+      {/* Etiqueta inferior con tipografía elegante */}
+      <span className="mt-2 text-[10px] sm:text-xs uppercase tracking-[2px] font-semibold text-amber-200/90 text-center">
+        {label}
+      </span>
+    </div>
+  );
+}
+
 export default function GraduationInvitation() {
   const [loading, setLoading] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -527,7 +592,7 @@ export default function GraduationInvitation() {
             initial={{ scale: 0.9, filter: "blur(10px)", opacity: 0 }}
             animate={{ scale: 1, filter: "blur(0px)", opacity: 1 }}
             transition={{ duration: 1.2, ease: "easeOut", delay: 0.3 }}
-            className="relative mx-auto mt-8 w-72 h-80 sm:w-80 sm:h-96"
+            className="relative mx-auto mt-8 w-72 h-96 sm:w-80 sm:h-[26rem] max-w-full"
           >
             {/* Elegant turquoise and gold luxury frame */}
             <div className="absolute -inset-2 rounded-3xl bg-gradient-to-tr from-amber-400/40 via-teal-400/30 to-amber-300/40 blur-md" />
@@ -537,7 +602,8 @@ export default function GraduationInvitation() {
                 alt="Jose Ronaldo Ortiz Garnica - Graduado"
                 fill
                 priority
-                className="object-cover object-center transition-transform duration-700 hover:scale-105"
+                sizes="(max-width: 640px) 288px, 320px"
+                className="object-cover object-top transition-transform duration-700 hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#022327]/90 via-transparent to-transparent" />
               <div className="absolute bottom-3 left-0 right-0 text-center px-4">
@@ -589,27 +655,30 @@ export default function GraduationInvitation() {
             Cuenta Regresiva
           </h3>
 
-          {/* Time boxes */}
-          <div className="mt-6 grid grid-cols-4 gap-2 sm:gap-4">
-            {[
-              { label: "Días", value: timeLeft.days },
-              { label: "Horas", value: timeLeft.hours },
-              { label: "Minutos", value: timeLeft.minutes },
-              { label: "Segundos", value: timeLeft.seconds },
-            ].map((item, idx) => (
-              <motion.div
-                key={idx}
-                whileHover={{ scale: 1.05 }}
-                className="flex flex-col items-center justify-center rounded-2xl bg-[#012226]/80 border border-teal-600/30 p-3 sm:p-4 shadow-inner backdrop-blur-md"
-              >
-                <span suppressHydrationWarning className="texto-dorado text-2xl sm:text-4xl font-extrabold font-mono">
-                  {String(item.value).padStart(2, "0")}
-                </span>
-                <span className="mt-1 text-[10px] sm:text-xs uppercase tracking-wider text-teal-300/80 font-medium">
-                  {item.label}
-                </span>
-              </motion.div>
-            ))}
+          {/* Time boxes - Flip Clock Vintage Mecánico */}
+          <div className="mt-7 flex items-center justify-center gap-1.5 xs:gap-2 sm:gap-3.5 max-w-xl mx-auto px-1">
+            <VintageFlipCard value={timeLeft.days} label="Días" />
+
+            <div className="flex flex-col items-center justify-center gap-2 pb-5 select-none" aria-hidden="true">
+              <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-amber-300 shadow-[0_0_8px_rgba(252,211,77,0.85)] animate-pulse" />
+              <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-amber-300 shadow-[0_0_8px_rgba(252,211,77,0.85)] animate-pulse" />
+            </div>
+
+            <VintageFlipCard value={timeLeft.hours} label="Horas" />
+
+            <div className="flex flex-col items-center justify-center gap-2 pb-5 select-none" aria-hidden="true">
+              <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-amber-300 shadow-[0_0_8px_rgba(252,211,77,0.85)] animate-pulse" />
+              <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-amber-300 shadow-[0_0_8px_rgba(252,211,77,0.85)] animate-pulse" />
+            </div>
+
+            <VintageFlipCard value={timeLeft.minutes} label="Minutos" />
+
+            <div className="flex flex-col items-center justify-center gap-2 pb-5 select-none" aria-hidden="true">
+              <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-amber-300 shadow-[0_0_8px_rgba(252,211,77,0.85)] animate-pulse" />
+              <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-amber-300 shadow-[0_0_8px_rgba(252,211,77,0.85)] animate-pulse" />
+            </div>
+
+            <VintageFlipCard value={timeLeft.seconds} label="Segundos" />
           </div>
 
           {/* Add to Calendar button */}
