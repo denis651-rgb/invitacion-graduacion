@@ -797,12 +797,33 @@ export default function GraduationInvitation() {
                   </div>
                 </motion.div>
 
-                {/* 3. Pareja */}
+                {/* 3. Familiares y amigos */}
                 <motion.div
                   initial={{ opacity: 0, y: 15 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: 0.1 }}
+                  className="tarjeta-agradecimiento p-4 sm:p-5 text-left"
+                >
+                  <div className="flex items-start gap-3.5">
+                    <div className="rounded-xl bg-amber-400/20 p-2 text-amber-300 shrink-0 mt-0.5 border border-amber-300/30">
+                      <GraduationCap className="h-4 w-4" />
+                    </div>
+                    <p className="text-sm sm:text-base leading-relaxed text-teal-100">
+                      <strong className="texto-dorado font-semibold block sm:inline sm:mr-1">
+                        A mis hermanos, padrinos, familiares y amigos,
+                      </strong>
+                      gracias por acompañarme, motivarme y ser parte de este sueño que hoy se convierte en realidad.
+                    </p>
+                  </div>
+                </motion.div>
+
+                {/* 4. Pareja (Cierre especial) */}
+                <motion.div
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.15 }}
                   className="tarjeta-agradecimiento p-4 sm:p-5 text-left"
                 >
                   <div className="flex items-start gap-3.5">
@@ -818,27 +839,6 @@ export default function GraduationInvitation() {
                         Este logro también lleva un pedacito de ti.
                         <Heart className="h-3.5 w-3.5 text-rose-300 fill-rose-300/80 inline shrink-0" />
                       </span>
-                    </p>
-                  </div>
-                </motion.div>
-
-                {/* 4. Familiares y amigos */}
-                <motion.div
-                  initial={{ opacity: 0, y: 15 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.15 }}
-                  className="tarjeta-agradecimiento p-4 sm:p-5 text-left"
-                >
-                  <div className="flex items-start gap-3.5">
-                    <div className="rounded-xl bg-amber-400/20 p-2 text-amber-300 shrink-0 mt-0.5 border border-amber-300/30">
-                      <GraduationCap className="h-4 w-4" />
-                    </div>
-                    <p className="text-sm sm:text-base leading-relaxed text-teal-100">
-                      <strong className="texto-dorado font-semibold block sm:inline sm:mr-1">
-                        A mis hermanos, padrinos, familiares y amigos,
-                      </strong>
-                      gracias por acompañarme, motivarme y ser parte de este sueño que hoy se convierte en realidad.
                     </p>
                   </div>
                 </motion.div>
