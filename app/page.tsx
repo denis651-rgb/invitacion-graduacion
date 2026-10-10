@@ -448,7 +448,7 @@ export default function GraduationInvitation() {
   };
 
   const calendarUrl =
-    "https://calendar.google.com/calendar/render?action=TEMPLATE&text=Graduaci%C3%B3n+de+Jose+Ronaldo+Ortiz+Garnica&dates=20261113T200000Z/20261114T040000Z&details=Celebraci%C3%B3n+de+Graduaci%C3%B3n+-+Lic.+en+Administraci%C3%B3n+de+Empresas&location=Facultad+Integral+Ichilo";
+    "https://calendar.google.com/calendar/render?action=TEMPLATE&text=Graduaci%C3%B3n+de+Jose+Ronaldo+Ortiz+Garnica&dates=20261113T200000Z/20261115T040000Z&details=Celebraci%C3%B3n+de+Graduaci%C3%B3n%3A%0A%E2%80%A2+Ceremonia+Acad%C3%A9mica%3A+Viernes+13+de+Noviembre+16%3A00+Hrs+(Facultad+Integral+Ichilo)%0A%E2%80%A2+Recepci%C3%B3n+Social%3A+S%C3%A1bado+14+de+Noviembre+20%3A00+Hrs+(Sal%C3%B3n+Nuevo+Horizonte+Km-35)&location=Facultad+Integral+Ichilo";
 
   return (
     <div className="relative min-h-screen bg-gradient-to-b from-[#011619] via-[#022e34] to-[#011619] text-teal-50 selection:bg-teal-500 selection:text-white">
@@ -926,10 +926,14 @@ export default function GraduationInvitation() {
                     <h4 className="text-lg font-bold text-white font-sans">
                       Predios de la Facultad Integral Ichilo
                     </h4>
-                    <div className="mt-2 flex flex-col gap-1 text-xs text-teal-200">
+                    <div className="mt-2.5 flex flex-col gap-1.5 text-xs text-teal-200">
+                      <span className="flex items-center gap-1.5 font-semibold text-amber-200">
+                        <Calendar className="h-3.5 w-3.5 text-amber-300" />
+                        Viernes, 13 de Noviembre
+                      </span>
                       <span className="flex items-center gap-1.5 font-medium">
                         <Clock className="h-3.5 w-3.5 text-amber-300" />
-                        Hora de inicio: 16:00
+                        Hora de inicio: 16:00 Hrs
                       </span>
                       <span className="flex items-center gap-1.5">
                         <MapPin className="h-3.5 w-3.5 text-amber-300" />
@@ -976,10 +980,14 @@ export default function GraduationInvitation() {
                     <h4 className="text-lg font-bold text-white font-sans">
                       Nuevo Horizonte Km-35
                     </h4>
-                    <div className="mt-2 flex flex-col gap-1 text-xs text-teal-200">
+                    <div className="mt-2.5 flex flex-col gap-1.5 text-xs text-teal-200">
+                      <span className="flex items-center gap-1.5 font-semibold text-amber-200">
+                        <Calendar className="h-3.5 w-3.5 text-amber-300" />
+                        Sábado, 14 de Noviembre
+                      </span>
                       <span className="flex items-center gap-1.5 font-medium">
                         <Clock className="h-3.5 w-3.5 text-amber-300" />
-                        Hora de inicio: 19:30
+                        Hora de inicio: 20:00 Hrs
                       </span>
                       <span className="flex items-center gap-1.5">
                         <MapPin className="h-3.5 w-3.5 text-amber-300" />
